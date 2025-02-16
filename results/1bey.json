@@ -1,55 +1,13 @@
 {
     "Protein ID / Filename": "1bey",
-    "Processing Date and Time": "2025-02-14 02:31:18",
+    "Processing Date and Time": "2025-02-16 22:57:55",
     "Extracted Chains": {
         "H": {
-            "Acids": [
-                "F",
-                "P",
-                "Q",
-                "T",
-                "K",
-                "A",
-                "I",
-                "R",
-                "V",
-                "E",
-                "W",
-                "S",
-                "M",
-                "L",
-                "G",
-                "N",
-                "H",
-                "a",
-                "Y",
-                "C"
-            ],
+            "Acids": "QVLESGPRTaFCYMNWIKAH",
             "Length": 20
         },
         "L": {
-            "Acids": [
-                "F",
-                "P",
-                "Q",
-                "T",
-                "A",
-                "K",
-                "I",
-                "R",
-                "V",
-                "W",
-                "E",
-                "S",
-                "M",
-                "L",
-                "G",
-                "N",
-                "H",
-                "a",
-                "Y",
-                "C"
-            ],
+            "Acids": "CIQMTSPLAVGRaKNYWFEH",
             "Length": 20
         }
     }
