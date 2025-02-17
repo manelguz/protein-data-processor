@@ -1,4 +1,5 @@
 import torch
+import time
 
 # Load ESM model
 
@@ -31,9 +32,12 @@ class ESMModel:
         batch_tokens = batch_tokens.to(device)
         
         # Extract per-residue representations
+        start_time = time.time()
         with torch.no_grad():
             results = self.model(batch_tokens, repr_layers=[33])
             embeddings = results["representations"][33]
+        end_time = time.time()
+        elapsed_time = end_time - start_time
         
         # Generate per-sequence representations via averaging
         # NOTE: token 0 is always a beginning-of-sequence token, so the first residue is token 1.
@@ -41,10 +45,10 @@ class ESMModel:
         for i, tokens_len in enumerate(batch_lens):
             sequence_representations.append(embeddings[i, 1 : tokens_len - 1].mean(0))
         
-        return sequence_representations
+        return sequence_representations, elapsed_time, results
 
 if "__main__" == __name__:
     sequence = "MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG"
     esm_model = ESMModel()
-    sequence_representations = esm_model.extract_chain_embeddings(sequence)
+    sequence_representations, elapsed_time, results = esm_model.extract_chain_embeddings(sequence)
     print(sequence_representations)
