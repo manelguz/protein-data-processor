@@ -1,14 +1,14 @@
 {
-    "Protein ID / Filename": "1bey",
-    "Processing Date and Time": "2025-02-16 22:57:55",
-    "Extracted Chains": {
+    "protein_id": "1bey",
+    "date": "2025-02-17 02:28:48",
+    "chain": {
         "H": {
-            "Acids": "QVLESGPRTaFCYMNWIKAH",
-            "Length": 20
+            "sequence": "QVLESGPRTaFCYMNWIKAH",
+            "length": 20
         },
         "L": {
-            "Acids": "CIQMTSPLAVGRaKNYWFEH",
-            "Length": 20
+            "sequence": "CIQMTSPLAVGRaKNYWFEH",
+            "length": 20
         }
     }
 }

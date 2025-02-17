@@ -77,21 +77,21 @@ class PDB(object):
                     return True
         raise AtomMissingException("The file does not has the following atom types: {}".format(" ".join(REQ_ATOMS)))
 
-    def read_mapping(self, mapping_file_path:str):
+    def read_json_data(self, json_data:str):
         """
-        Read the json mapping file
+        Read the json file
 
         Args:
-            mapping_file_path (str): The path of the mapping file
+            json_data (str): The path of the  file
         """
         try:
-            with open(mapping_file_path, 'r', encoding='utf-8') as file:
+            with open(json_data, 'r', encoding='utf-8') as file:
                 data = json.load(file)
             return data
         except FileNotFoundError:
-            raise FileNotFoundError("The mapping file can not be found at {}".format(mapping_file_path))
+            raise FileNotFoundError("The json file can not be found at {}".format(json_data))
         except json.JSONDecodeError:
-            raise json.JSONDecodeError("Error: The file {} contains invalid JSON.".format(mapping_file_path))
+            raise json.JSONDecodeError("Error: The file {} contains invalid JSON.".format(json_data))
 
     def extract_hl_protein_chain(self):
         """
@@ -103,7 +103,7 @@ class PDB(object):
             self.proteins (Dict): Dictionary to store the chain protein data
         """
 
-        chain_abrevation_mapper = self.read_mapping(os.path.join(INPUT_DATA_PATH, MAPPING_FILE_NAME))
+        chain_abrevation_mapper = self.read_json_data(os.path.join(INPUT_DATA_PATH, MAPPING_FILE_NAME))
         for atom in self.atom_data:
             # Get the protein data and type for each atom
             protein_chain, protein_type = re.findall(r'^ATOM\s+\d+\s+\w+\s+(\w+)\s+(\w+)\s+', atom)[0]
@@ -130,16 +130,16 @@ class PDB(object):
         
     
         metadata = {
-            "Protein ID / Filename": file_name,
-            "Processing Date and Time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "Extracted Chains": {
+            "protein_id": file_name,
+            "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "chain": {
                 "H": {
-                    "Acids": "".join(self.proteins["H"]),
-                    "Length": len(self.proteins["H"])
+                    "sequence": "".join(self.proteins["H"]),
+                    "length": len(self.proteins["H"])
                 },
                 "L": {
-                    "Acids": "".join(self.proteins["L"]),
-                    "Length": len(self.proteins["L"])
+                    "sequence": "".join(self.proteins["L"]),
+                    "length": len(self.proteins["L"])
                 }
             }
         }
