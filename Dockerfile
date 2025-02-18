@@ -35,7 +35,6 @@ COPY src /app/src
 # Set working directory
 WORKDIR /app/src
 
-
 # Expose port
 EXPOSE 5000
 # Run the application with gunicorn, server production ready instaed of flask
