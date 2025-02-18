@@ -113,7 +113,7 @@ class PDB(object):
         # Now remove duplicates
         for protein_type in self.proteins.keys():
             ## Use this inseted of set to keep the order
-            self.proteins[protein_type] = list(dict.fromkeys(self.proteins[protein_type]))
+            self.proteins[protein_type] = "".join(list(dict.fromkeys(self.proteins[protein_type])))
         return self.proteins
 
     def write_chain_to_json(self, file_name:str, output_file_path:str):
@@ -134,11 +134,11 @@ class PDB(object):
             "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "chain": {
                 "H": {
-                    "sequence": "".join(self.proteins["H"]),
+                    "sequence": self.proteins["H"],
                     "length": len(self.proteins["H"])
                 },
                 "L": {
-                    "sequence": "".join(self.proteins["L"]),
+                    "sequence": self.proteins["L"],
                     "length": len(self.proteins["L"])
                 }
             }

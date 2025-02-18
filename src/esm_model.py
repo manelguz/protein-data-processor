@@ -46,7 +46,7 @@ class ESMModel:
         # NOTE: token 0 is always a beginning-of-sequence token, so the first residue is token 1.
         sequence_representations = []
         for i, tokens_len in enumerate(batch_lens):
-            sequence_representations.append(embeddings[i, 1 : tokens_len - 1].mean(0))
+            sequence_representations.append(embeddings[i, 1 : tokens_len - 1].mean(0).tolist())
 
         return sequence_representations, elapsed_time, results
 
