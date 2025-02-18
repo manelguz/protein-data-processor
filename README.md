@@ -96,6 +96,7 @@ This is an example of how to list things you need to use the software and how to
 ### Usage with docker
   ```
     docker-compose up --build ## Or docker-compose up on succesive runs
+    pip3 install requests ## Necessary to perform the request to the API
     python3 src/call_pdb_api.py inputs/1bey.pdb # Call the script to perfom chain infernce throw post request to the already launched docker
     docker-compose down
   ```
