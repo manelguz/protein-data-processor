@@ -16,7 +16,6 @@ dependencies:
       - torch==1.12.1+cu113 
       - numpy==1.21.2
       - requests==2.26.0
-      - scipy==1.7.1
       - tqdm==4.62.2
       - fair-esm[esmfold]
       - mkl==2024.0
