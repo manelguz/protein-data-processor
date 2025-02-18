@@ -102,6 +102,19 @@ This is an example of how to list things you need to use the software and how to
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+## Main Application workflow
+
+```mermaid
+graph TD
+    A[User] -->|Provides PDB file| B[call_pdb_api.py]
+    B -->|Reads PDB file| C[PDB Class]
+    C -->|Extracts atom data| D[Atom Data]
+    C -->|Checks atom types| E[Validated Atom Data]
+    C -->|Extracts H and L chains| F[Protein Chains]
+    B -->|Sends protein chains| G[API Endpoint]
+    G -->|Returns embeddings| H[Embeddings]
+    B -->|Saves embeddings| I[Output JSON File]
+```
 
 <!-- CONTRIBUTING -->
 ## Contributing
