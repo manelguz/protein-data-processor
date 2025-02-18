@@ -8,7 +8,7 @@ class AtomMissingException(Exception):
 
 INPUT_DATA_PATH = "inputs"
 FILE_NAME = "1bey.pdb"
-MAPPING_FILE_NAME = "mapping.json"
+MAPPING_FILE_NAME = "mapping2.json"
 RESULT_PATH = "results"
 
 

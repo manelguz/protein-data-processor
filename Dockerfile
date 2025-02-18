@@ -34,7 +34,6 @@ RUN mkdir -p /root/.cache/torch/hub/checkpoints/
 RUN wget https://dl.fbaipublicfiles.com/fair-esm/models/esm2_t33_650M_UR50D.pt -O /root/.cache/torch/hub/checkpoints/esm2_t33_650M_UR50D.pt
 RUN wget https://dl.fbaipublicfiles.com/fair-esm/regression/esm2_t33_650M_UR50D-contact-regression.pt -O /root/.cache/torch/hub/checkpoints/esm2_t33_650M_UR50D-contact-regression.pt
 RUN wget https://github.com/facebookresearch/esm/zipball/main -O /root/.cache/torch/hub/main.zip && unzip /root/.cache/torch/hub/main.zip -d /root/.cache/torch/hub/ && mv /root/.cache/torch/hub/facebookresearch-esm-* /root/.cache/torch/hub/facebookresearch_esm_main
-# ADD models/esm2_t33_650M_UR50D.pt /root/.cache/torch/hub/checkpoints/
 
 # Set working directory
 WORKDIR /app

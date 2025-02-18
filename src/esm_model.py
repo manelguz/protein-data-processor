@@ -34,17 +34,20 @@ class ESMModel:
         # Extract per-residue representations
         start_time = time.time()
         with torch.no_grad():
+            # THe model returns a tuple with the output, and the output is a dictionary with the keys "logits" and "representations"
             results = self.model(batch_tokens, repr_layers=[33])
-            embeddings = results["representations"][33]
         end_time = time.time()
         elapsed_time = end_time - start_time
+        if torch.cuda.is_available():
+            results = results.cpu()
+        embeddings = results["representations"][33].numpy()
         
         # Generate per-sequence representations via averaging
         # NOTE: token 0 is always a beginning-of-sequence token, so the first residue is token 1.
         sequence_representations = []
         for i, tokens_len in enumerate(batch_lens):
             sequence_representations.append(embeddings[i, 1 : tokens_len - 1].mean(0))
-        
+
         return sequence_representations, elapsed_time, results
 
 if "__main__" == __name__:

@@ -6,7 +6,6 @@ from esm_model import ESMModel
 
 INPUT_DATA_PATH = "inputs"
 FILE_NAME = "1bey.pdb"
-MAPPING_FILE_NAME = "mapping.json"
 RESULT_PATH = "results"
 
 # Create the objects 
@@ -23,11 +22,19 @@ pdb.write_chain_to_json(file_name, os.path.join(RESULT_PATH, file_name + ".json"
 protein_data = pdb.read_json_data(os.path.join(RESULT_PATH, file_name + ".json"))
 
 # Predict the chain embeddings
-h_chain_embeddings = esm_model.extract_chain_embeddings(protein_data["chain"]["H"]["sequence"])
-l_chain_embeddings = esm_model.extract_chain_embeddings(protein_data["chain"]["L"]["sequence"])
+h_chain_embeddings, elapsed_time_h, model_output_h  = esm_model.extract_chain_embeddings(protein_data["chain"]["H"]["sequence"])
+l_chain_embeddings, elapsed_time_l, model_output_l  = esm_model.extract_chain_embeddings(protein_data["chain"]["L"]["sequence"])
 
+# Print the results
+print(f"The protein data for {file_name} is:")
 
+print(f"The L chain is: {protein_data['chain']['L']['sequence']}")
+print(f"Elapsed time for L chain: {elapsed_time_l}")
+print(f"Embeddings for L chain: {l_chain_embeddings}")
 
+print(f"The H chain is: {protein_data['chain']['H']['sequence']}")
+print(f"Elapsed time for H chain: {elapsed_time_h}")
+print(f"Embeddings for H chain: {h_chain_embeddings}")
 
 
 
