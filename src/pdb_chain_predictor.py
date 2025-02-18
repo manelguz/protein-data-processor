@@ -25,8 +25,8 @@ def main(input_file):
     protein_data = pdb.read_json_data(os.path.join(RESULT_PATH, file_name + ".json"))
 
     # Predict the chain embeddings
-    h_chain_embeddings, elapsed_time_h, model_output_h  = esm_model.extract_chain_embeddings(protein_data["chain"]["H"]["sequence"])
-    l_chain_embeddings, elapsed_time_l, model_output_l  = esm_model.extract_chain_embeddings(protein_data["chain"]["L"]["sequence"])
+    h_chain_embeddings, elapsed_time_h, model_output_h, _ = esm_model.extract_chain_embeddings(protein_data["chain"]["H"]["sequence"])
+    l_chain_embeddings, elapsed_time_l, model_output_l, metadata  = esm_model.extract_chain_embeddings(protein_data["chain"]["L"]["sequence"])
 
     # Print the results
     print(f"The protein data for {file_name} is:")
@@ -40,6 +40,7 @@ def main(input_file):
     print(f"Embeddings for H chain: {h_chain_embeddings}")
 
     embeddings = {
+            "metadata": metadata,
             "H_chain": {
                 "sequence": protein_data["chain"]["H"]["sequence"],
                 "embeddings":h_chain_embeddings,

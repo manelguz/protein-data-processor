@@ -21,12 +21,13 @@ def get_embeddings():
 
         h_sequence = data['h_sequence']
         l_sequence = data['l_sequence']
-        h_chain_embeddings, elapsed_time_h, _  = esm_model.extract_chain_embeddings(h_sequence)
-        l_chain_embeddings, elapsed_time_l, _  = esm_model.extract_chain_embeddings(l_sequence)
+        h_chain_embeddings, elapsed_time_h, _, _ = esm_model.extract_chain_embeddings(h_sequence)
+        l_chain_embeddings, elapsed_time_l, _, metadata  = esm_model.extract_chain_embeddings(l_sequence)
 
         
         # Convert tensors to lists for JSON serialization
         embeddings = {
+            "metadata": metadata,
             "H_chain": {
                 "sequence": h_sequence,
                 "embeddings":h_chain_embeddings,
