@@ -1,7 +1,7 @@
 import os
 import argparse
 from pathlib import Path
-
+import json
 
 from pdb_processor import PDB
 from esm_model import ESMModel
@@ -38,6 +38,23 @@ def main(input_file):
     print(f"The H chain is: {protein_data['chain']['H']['sequence']}")
     print(f"Elapsed time for H chain: {elapsed_time_h}")
     print(f"Embeddings for H chain: {h_chain_embeddings}")
+
+    embeddings = {
+            "H_chain": {
+                "sequence": protein_data["chain"]["H"]["sequence"],
+                "embeddings":h_chain_embeddings,
+                "elapsed_time_h": elapsed_time_h
+            },
+            "L_chain": {
+                "sequence": protein_data["chain"]["L"]["sequence"],
+                "embeddings": l_chain_embeddings,
+                "elapsed_time_l": elapsed_time_l
+            }
+        }
+    os.makedirs(RESULT_PATH, exist_ok=True)
+    output_file_path = os.path.join(RESULT_PATH, file_name + "_prediction.json")
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        json.dump(embeddings, f, indent=4)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Process a PDB file and send data to API.")
