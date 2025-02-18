@@ -111,10 +111,19 @@ graph TD
     C -->|Extracts atom data| D[Atom Data]
     C -->|Checks atom types| E[Validated Atom Data]
     C -->|Extracts H and L chains| F[Protein Chains]
-    B -->|Sends protein chains| G[API Endpoint]
-    G -->|Returns embeddings| H[Embeddings]
+    B -->|Sends protein chains| G[API Endpoint] --> |Returns embedding| B
+    G -->|Send L and H chains as Input| H[Pytorch Model] --> |Returns model output| G
     B -->|Saves embeddings| I[Output JSON File]
 ```
+
+1. User: The user provides a PDB file as input.
+2. call_pdb_api.py: The main script that launch the predictor with http request.
+3. PDB Class: The class responsible for reading, validating, and extracting data from the PDB file.
+5. Validated Atom Data: Atom data that has been validated to contain required atom types.
+6. Protein Chains: The extracted H and L protein chains and save it as meetadata.
+7. API HTTP Rquest: Once we have the chains we sent it to API for the embeddigs inferencem
+8. Pytorch Model: the model obtains the embeding an return the embeddig information.
+9. Output JSON File: The final output file where the embeddings are saved.
 
 <!-- CONTRIBUTING -->
 ## Contributing
