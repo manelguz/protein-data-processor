@@ -6,9 +6,8 @@ import os
 class AtomMissingException(Exception):
     pass
 
-INPUT_DATA_PATH = "inputs"
-FILE_NAME = "1bey.pdb"
-MAPPING_FILE_NAME = "mapping2.json"
+
+MAPPING_FILE_NAME = "inputs/mapping2.json"
 RESULT_PATH = "results"
 
 
@@ -103,7 +102,7 @@ class PDB(object):
             self.proteins (Dict): Dictionary to store the chain protein data
         """
 
-        chain_abrevation_mapper = self.read_json_data(os.path.join(INPUT_DATA_PATH, MAPPING_FILE_NAME))
+        chain_abrevation_mapper = self.read_json_data(MAPPING_FILE_NAME)
         for atom in self.atom_data:
             # Get the protein data and type for each atom
             protein_chain, protein_type = re.findall(r'^ATOM\s+\d+\s+\w+\s+(\w+)\s+(\w+)\s+', atom)[0]
@@ -151,6 +150,8 @@ class PDB(object):
 
 
 if "__main__" == __name__:
+    INPUT_DATA_PATH = "inputs"
+    FILE_NAME = "1bey.pdb"
     pdb = PDB()
     pdb.read_file(os.path.join(INPUT_DATA_PATH, FILE_NAME))
     pdb.get_atom_data_from_pdb()
