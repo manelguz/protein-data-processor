@@ -126,6 +126,26 @@ graph TD
 8. Pytorch Model: the model obtains the embeding an return the embeddig information.
 9. Output JSON File: The final output file where the embeddings are saved.
 
+## Application deployment in AWS with terraform
+  ```sh
+    docker build . -t esmfold_claud -f tf/Dockerfile
+    cd tf
+    ## export you AWS env vars as envarioment
+    #export AWS_ACCESS_KEY_ID=
+    #export AWS_SECRET_ACCESS_KEY=
+    #export AWS_DEFAULT_REGION=
+    # export DOCKER_ECR_REPO= # the ECR respostory where to store the docker 
+    docker tag esmfold_claud:latest $AccountId.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$DOCKER_ECR_REPO:latest
+    docker push $AccountId.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$DOCKER_ECR_REPO:latest
+    export AccountId=$(aws sts get-caller-identity --query Account --output text)
+    terraform init
+    terraform validate
+    terraform plan -var region=$AWS_DEFAULT_REGION -out=tfplan
+    terraform apply -input=false tfplan
+  ```
+
+In a CI/CD we should implement that script in git hub action to be execute on master(release) and staging(pre-release) branch merges
+
 <!-- CONTRIBUTING -->
 ## Contributing
 

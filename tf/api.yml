@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: PDB API
+  description: api providing pdb inference services
+servers:
+
+paths: # all the methods has an additiona OPTIONS itegration  for handling browser based queries
+
+  /get_embeddings:
+    options:
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      tags:
+      - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content: {}
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,Authorization'''
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            responseTemplates:
+              application/json: |
+                {}
+    post:
+      summary: Get embedding from the pdb H and L chains
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                h_sequence:
+                  type: string
+                  required: true
+                  example: "MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG"
+                l_sequence:
+                  type: string
+                  required: true
+                  example: "MKTVRQERLKSIVRILERSKEPVSGAQLAEELSVSRQVIVQDIAYLRSLGYNIVATPRGYVLAGG"
+
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - H_chain
+                  - L_chain
+                properties:
+                  H_chain:
+                    type: object
+                  L_chain:
+                    type: object                    
+
+      x-amazon-apigateway-integration:
+        type: aws_proxy
+        uri: '${get_embedding_arn}'
+        httpMethod: POST
+        responses:
+          default:
+            statusCode: '200'   
+        passthroughBehavior: when_no_match

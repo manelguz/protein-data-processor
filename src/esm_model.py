@@ -1,7 +1,6 @@
 import torch
 import time
 import platform
-import datetime
 # Load ESM model
 
 class ESMModel:
